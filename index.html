@@ -36,13 +36,13 @@
                         for (x in igData.data){
                             var caption = (igData.data[x].caption) ? igData.data[x].caption.text : "No Title";
 
-                            var layout = "<li>";
-                            layout += `<div class='left'>
+                            var layout = `<li>
+                                        <div class='left'>
                                             <strong>` + caption + `</strong>
                                             <br>
                                             <img src='` + igData.data[x].images.thumbnail.url + `'/>
-                                        </div>`;
-                            layout += `<div class='right'>
+                                        </div>
+                                        <div class='right'>
                                         <ul>
                                             <li>
                                                 <a href='` + igData.data[x].images.standard_resolution.url + `' target='_blank'>View Standard Image</a>
@@ -54,8 +54,9 @@
                                                 <label># of Comments: </label>` + igData.data[x].comments.count + `
                                             </li>
                                         </ul>
-                                        </div>`;
-                            layout += "</li>";
+                                        </div>
+                                        </li>`;
+                                        
                             $('#ulPhotos').append(layout);
                         }
                     }
