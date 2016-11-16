@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style>
+            body {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 10pt;
+            }
+
+            #ulPhotos {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            #ulPhotos li {
+                display: table;
+                padding: 5px;
+            }
+            
+            #ulPhotos li .left, #ulPhotos li .right{
+                display: table-cell;
+                vertical-align: top;
+            } 
+
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://api.instagram.com/v1/users/self/media/recent/?access_token=4159612269.7b5438c.b50027824e3144e4bb4fb98ec21dc6a4',
+                    dataType: 'jsonp',
+                    success: function (igData){
+                        for (x in igData.data){
+                            var caption = (igData.data[x].caption) ? igData.data[x].caption.text : "No Title";
+
+                            var layout = "<li>";
+                            layout += `<div class='left'>
+                                            <strong>` + caption + `</strong>
+                                            <br>
+                                            <img src='` + igData.data[x].images.thumbnail.url + `'/>
+                                        </div>`;
+                            layout += `<div class='right'>
+                                        <ul>
+                                            <li>
+                                                <a href='` + igData.data[x].images.standard_resolution.url + `' target='_blank'>View Standard Image</a>
+                                            </li>
+                                            <li>
+                                                <label># of Likes: </label>` + igData.data[x].likes.count + `
+                                            </li>
+                                            <li>
+                                                <label># of Comments: </label>` + igData.data[x].comments.count + `
+                                            </li>
+                                        </ul>
+                                        </div>`;
+                            layout += "</li>";
+                            $('#ulPhotos').append(layout);
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+<body>
+    <ul id='ulPhotos'></ul>
+</body>
+</html>
